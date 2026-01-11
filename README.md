@@ -524,7 +524,7 @@ monitor_thread.start()
 
 ```bash
 # Clone repository
-git clone https://github.com/logtide/python-sdk.git
+git clone https://github.com/logtide-dev/python-sdk.git
 cd logtide-sdk-python
 
 # Create virtual environment
@@ -561,11 +561,11 @@ MIT
 
 ## Contributing
 
-Contributions are welcome! Please open an issue or PR on [GitHub](https://github.com/logtide/python-sdk).
+Contributions are welcome! Please open an issue or PR on [GitHub](https://github.com/logtide-dev/python-sdk).
 
 ---
 
 ## Support
 
 - **Documentation**: [https://logtide.dev/docs](https://logtide.dev/docs)
-- **Issues**: [GitHub Issues](https://github.com/logtide/python-sdk/issues)
+- **Issues**: [GitHub Issues](https://github.com/logtide-dev/python-sdk/issues)
