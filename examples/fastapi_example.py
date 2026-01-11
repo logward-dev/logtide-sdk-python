@@ -1,14 +1,14 @@
-"""FastAPI middleware example for LogWard Python SDK."""
+"""FastAPI middleware example for LogTide Python SDK."""
 
 from fastapi import FastAPI
 
-from logward_sdk import ClientOptions, LogWardClient
-from logward_sdk.middleware import LogWardFastAPIMiddleware
+from logtide_sdk import ClientOptions, LogTideClient
+from logtide_sdk.middleware import LogTideFastAPIMiddleware
 
 app = FastAPI()
 
-# Initialize LogWard client
-client = LogWardClient(
+# Initialize LogTide client
+client = LogTideClient(
     ClientOptions(
         api_url="http://localhost:8080",
         api_key="lp_your_api_key_here",
@@ -17,7 +17,7 @@ client = LogWardClient(
 
 # Add middleware
 app.add_middleware(
-    LogWardFastAPIMiddleware,
+    LogTideFastAPIMiddleware,
     client=client,
     service_name="fastapi-api",
     log_requests=True,

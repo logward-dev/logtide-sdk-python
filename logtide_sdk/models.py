@@ -1,4 +1,4 @@
-"""Data models for LogWard SDK."""
+"""Data models for LogTide SDK."""
 
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -37,7 +37,7 @@ class LogEntry:
 
 @dataclass
 class ClientOptions:
-    """Configuration options for LogWard client."""
+    """Configuration options for LogTide client."""
 
     api_url: str
     api_key: str

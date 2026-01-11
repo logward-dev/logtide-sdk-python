@@ -1,4 +1,4 @@
-"""Django middleware for LogWard SDK."""
+"""Django middleware for LogTide SDK."""
 
 import time
 from typing import Callable, Optional
@@ -8,29 +8,29 @@ try:
     from django.http import HttpRequest, HttpResponse
 except ImportError:
     raise ImportError(
-        "Django is required for LogWardDjangoMiddleware. "
-        "Install it with: pip install logward-sdk[django]"
+        "Django is required for LogTideDjangoMiddleware. "
+        "Install it with: pip install logtide-sdk[django]"
     )
 
-from ..client import LogWardClient
+from ..client import LogTideClient
 
 
-class LogWardDjangoMiddleware:
+class LogTideDjangoMiddleware:
     """
     Django middleware for automatic request/response logging.
 
     Usage:
         # settings.py
         MIDDLEWARE = [
-            'logward_sdk.middleware.LogWardDjangoMiddleware',
+            'logtide_sdk.middleware.LogTideDjangoMiddleware',
         ]
 
         # Create client and configure
-        LOGWARD_CLIENT = LogWardClient(ClientOptions(...))
-        LOGWARD_SERVICE_NAME = 'django-api'
-        LOGWARD_LOG_REQUESTS = True
-        LOGWARD_LOG_RESPONSES = True
-        LOGWARD_SKIP_PATHS = ['/admin/']
+        LOGTIDE_CLIENT = LogTideClient(ClientOptions(...))
+        LOGTIDE_SERVICE_NAME = 'django-api'
+        LOGTIDE_LOG_REQUESTS = True
+        LOGTIDE_LOG_RESPONSES = True
+        LOGTIDE_SKIP_PATHS = ['/admin/']
     """
 
     def __init__(self, get_response: Callable[[HttpRequest], HttpResponse]) -> None:
@@ -43,17 +43,17 @@ class LogWardDjangoMiddleware:
         self.get_response = get_response
 
         # Get configuration from settings
-        self.client: LogWardClient = getattr(settings, "LOGWARD_CLIENT", None)
+        self.client: LogTideClient = getattr(settings, "LOGTIDE_CLIENT", None)
         if not self.client:
-            raise ValueError("LOGWARD_CLIENT must be configured in Django settings")
+            raise ValueError("LOGTIDE_CLIENT must be configured in Django settings")
 
-        self.service_name: str = getattr(settings, "LOGWARD_SERVICE_NAME", "django-app")
-        self.log_requests: bool = getattr(settings, "LOGWARD_LOG_REQUESTS", True)
-        self.log_responses: bool = getattr(settings, "LOGWARD_LOG_RESPONSES", True)
-        self.log_errors: bool = getattr(settings, "LOGWARD_LOG_ERRORS", True)
-        self.include_headers: bool = getattr(settings, "LOGWARD_INCLUDE_HEADERS", False)
-        self.skip_health_check: bool = getattr(settings, "LOGWARD_SKIP_HEALTH_CHECK", True)
-        self.skip_paths: list = getattr(settings, "LOGWARD_SKIP_PATHS", [])
+        self.service_name: str = getattr(settings, "LOGTIDE_SERVICE_NAME", "django-app")
+        self.log_requests: bool = getattr(settings, "LOGTIDE_LOG_REQUESTS", True)
+        self.log_responses: bool = getattr(settings, "LOGTIDE_LOG_RESPONSES", True)
+        self.log_errors: bool = getattr(settings, "LOGTIDE_LOG_ERRORS", True)
+        self.include_headers: bool = getattr(settings, "LOGTIDE_INCLUDE_HEADERS", False)
+        self.skip_health_check: bool = getattr(settings, "LOGTIDE_SKIP_HEALTH_CHECK", True)
+        self.skip_paths: list = getattr(settings, "LOGTIDE_SKIP_PATHS", [])
 
         if self.skip_health_check:
             self.skip_paths.extend(["/health", "/health/", "/healthz", "/healthz/"])

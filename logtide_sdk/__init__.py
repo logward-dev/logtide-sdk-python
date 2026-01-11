@@ -1,8 +1,8 @@
-"""LogWard SDK - Official Python SDK for LogWard."""
+"""LogTide SDK - Official Python SDK for LogTide."""
 
-from .client import LogWardClient
+from .client import LogTideClient
 from .enums import CircuitState, LogLevel
-from .exceptions import BufferFullError, CircuitBreakerOpenError, LogWardError
+from .exceptions import BufferFullError, CircuitBreakerOpenError, LogTideError
 from .models import (
     AggregatedStatsOptions,
     AggregatedStatsResponse,
@@ -17,7 +17,7 @@ __version__ = "0.1.0"
 
 __all__ = [
     # Client
-    "LogWardClient",
+    "LogTideClient",
     # Models
     "LogEntry",
     "ClientOptions",
@@ -30,7 +30,7 @@ __all__ = [
     "LogLevel",
     "CircuitState",
     # Exceptions
-    "LogWardError",
+    "LogTideError",
     "CircuitBreakerOpenError",
     "BufferFullError",
 ]

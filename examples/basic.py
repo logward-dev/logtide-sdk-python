@@ -1,9 +1,9 @@
-"""Basic usage example for LogWard Python SDK."""
+"""Basic usage example for LogTide Python SDK."""
 
-from logward_sdk import ClientOptions, LogWardClient
+from logtide_sdk import ClientOptions, LogTideClient
 
 # Initialize client
-client = LogWardClient(
+client = LogTideClient(
     ClientOptions(
         api_url="http://localhost:8080",
         api_key="lp_your_api_key_here",

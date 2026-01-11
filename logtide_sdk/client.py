@@ -1,4 +1,4 @@
-"""Main LogWard SDK client implementation."""
+"""Main LogTide SDK client implementation."""
 
 import atexit
 import time
@@ -24,17 +24,17 @@ from .models import (
 )
 
 
-class LogWardClient:
+class LogTideClient:
     """
-    LogWard SDK Client.
+    LogTide SDK Client.
 
-    Main client for sending logs to LogWard with automatic batching,
+    Main client for sending logs to LogTide with automatic batching,
     retry logic, circuit breaker, and query capabilities.
     """
 
     def __init__(self, options: ClientOptions) -> None:
         """
-        Initialize LogWard client.
+        Initialize LogTide client.
 
         Args:
             options: Client configuration options
@@ -61,7 +61,7 @@ class LogWardClient:
             self._schedule_flush()
 
         if self.options.debug:
-            print(f"[LogWard] Client initialized: {options.api_url}")
+            print(f"[LogTide] Client initialized: {options.api_url}")
 
     def set_trace_id(self, trace_id: Optional[str]) -> None:
         """
@@ -141,7 +141,7 @@ class LogWardClient:
             # Check buffer size
             if len(self._buffer) >= self.options.max_buffer_size:
                 if self.options.debug:
-                    print(f"[LogWard] Buffer full, dropping log: {entry.message}")
+                    print(f"[LogTide] Buffer full, dropping log: {entry.message}")
 
                 with self._metrics_lock:
                     self._metrics.logs_dropped += 1
@@ -262,7 +262,7 @@ class LogWardClient:
         )
 
     def flush(self) -> None:
-        """Flush buffered logs to LogWard API."""
+        """Flush buffered logs to LogTide API."""
         if self._closed:
             return
 
@@ -471,7 +471,7 @@ class LogWardClient:
         self.flush()
 
         if self.options.debug:
-            print("[LogWard] Client closed")
+            print("[LogTide] Client closed")
 
     def __del__(self) -> None:
         """Destructor to ensure cleanup."""
@@ -489,7 +489,7 @@ class LogWardClient:
                 # Check circuit breaker
                 if self._circuit_breaker.state == CircuitState.OPEN:
                     if self.options.debug:
-                        print("[LogWard] Circuit breaker open, skipping send")
+                        print("[LogTide] Circuit breaker open, skipping send")
 
                     with self._metrics_lock:
                         self._metrics.logs_dropped += len(logs)
@@ -508,7 +508,7 @@ class LogWardClient:
                     self._metrics.logs_sent += len(logs)
 
                 if self.options.debug:
-                    print(f"[LogWard] Sent {len(logs)} logs ({latency:.2f}ms)")
+                    print(f"[LogTide] Sent {len(logs)} logs ({latency:.2f}ms)")
 
                 return
 
@@ -527,7 +527,7 @@ class LogWardClient:
 
                 if attempt > self.options.max_retries:
                     if self.options.debug:
-                        print(f"[LogWard] Failed to send logs after {attempt} attempts: {e}")
+                        print(f"[LogTide] Failed to send logs after {attempt} attempts: {e}")
 
                     with self._metrics_lock:
                         self._metrics.logs_dropped += len(logs)
@@ -535,7 +535,7 @@ class LogWardClient:
 
                 # Exponential backoff
                 if self.options.debug:
-                    print(f"[LogWard] Retry {attempt}/{self.options.max_retries} in {delay}s")
+                    print(f"[LogTide] Retry {attempt}/{self.options.max_retries} in {delay}s")
 
                 time.sleep(delay)
                 delay *= 2
@@ -547,7 +547,7 @@ class LogWardClient:
 
     def _send_logs(self, logs: List[LogEntry]) -> None:
         """
-        Send logs to LogWard API.
+        Send logs to LogTide API.
 
         Args:
             logs: Logs to send

@@ -1,6 +1,6 @@
-# LogWard Python SDK
+# LogTide Python SDK
 
-Official Python SDK for LogWard with advanced features: automatic batching, retry logic, circuit breaker, query API, live streaming, and middleware support.
+Official Python SDK for LogTide with advanced features: automatic batching, retry logic, circuit breaker, query API, live streaming, and middleware support.
 
 ## Features
 
@@ -25,34 +25,34 @@ Official Python SDK for LogWard with advanced features: automatic batching, retr
 ## Installation
 
 ```bash
-pip install logward-sdk
+pip install logtide-sdk
 ```
 
 ### Optional dependencies
 
 ```bash
 # For async support
-pip install logward-sdk[async]
+pip install logtide-sdk[async]
 
 # For Flask middleware
-pip install logward-sdk[flask]
+pip install logtide-sdk[flask]
 
 # For Django middleware
-pip install logward-sdk[django]
+pip install logtide-sdk[django]
 
 # For FastAPI middleware
-pip install logward-sdk[fastapi]
+pip install logtide-sdk[fastapi]
 
 # Install all extras
-pip install logward-sdk[async,flask,django,fastapi]
+pip install logtide-sdk[async,flask,django,fastapi]
 ```
 
 ## Quick Start
 
 ```python
-from logward_sdk import LogWardClient, ClientOptions
+from logtide_sdk import LogTideClient, ClientOptions
 
-client = LogWardClient(
+client = LogTideClient(
     ClientOptions(
         api_url='http://localhost:8080',
         api_key='lp_your_api_key_here',
@@ -75,7 +75,7 @@ client.close()
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `api_url` | `str` | **required** | Base URL of your LogWard instance |
+| `api_url` | `str` | **required** | Base URL of your LogTide instance |
 | `api_key` | `str` | **required** | Project API key (starts with `lp_`) |
 | `batch_size` | `int` | `100` | Number of logs to batch before sending |
 | `flush_interval` | `int` | `5000` | Interval in ms to auto-flush logs |
@@ -99,7 +99,7 @@ client.close()
 ```python
 import os
 
-client = LogWardClient(
+client = LogTideClient(
     ClientOptions(
         api_url='http://localhost:8080',
         api_key='lp_your_api_key_here',
@@ -143,7 +143,7 @@ client = LogWardClient(
 ### Basic Logging
 
 ```python
-from logward_sdk import LogLevel
+from logtide_sdk import LogLevel
 
 client.debug('service-name', 'Debug message')
 client.info('service-name', 'Info message', {'userId': 123})
@@ -222,7 +222,7 @@ Search and retrieve logs programmatically.
 
 ```python
 from datetime import datetime, timedelta
-from logward_sdk import QueryOptions, LogLevel
+from logtide_sdk import QueryOptions, LogLevel
 
 result = client.query(
     QueryOptions(
@@ -257,7 +257,7 @@ print(f"Trace has {len(logs)} logs")
 
 ```python
 from datetime import datetime, timedelta
-from logward_sdk import AggregatedStatsOptions
+from logtide_sdk import AggregatedStatsOptions
 
 stats = client.get_aggregated_stats(
     AggregatedStatsOptions(
@@ -329,19 +329,19 @@ Auto-log all HTTP requests and responses.
 
 ```python
 from flask import Flask
-from logward_sdk import LogWardClient, ClientOptions
-from logward_sdk.middleware import LogWardFlaskMiddleware
+from logtide_sdk import LogTideClient, ClientOptions
+from logtide_sdk.middleware import LogTideFlaskMiddleware
 
 app = Flask(__name__)
 
-client = LogWardClient(
+client = LogTideClient(
     ClientOptions(
         api_url='http://localhost:8080',
         api_key='lp_your_api_key_here',
     )
 )
 
-LogWardFlaskMiddleware(
+LogTideFlaskMiddleware(
     app,
     client=client,
     service_name='flask-api',
@@ -361,30 +361,30 @@ LogWardFlaskMiddleware(
 ```python
 # settings.py
 MIDDLEWARE = [
-    'logward_sdk.middleware.LogWardDjangoMiddleware',
+    'logtide_sdk.middleware.LogTideDjangoMiddleware',
 ]
 
-from logward_sdk import LogWardClient, ClientOptions
+from logtide_sdk import LogTideClient, ClientOptions
 
-LOGWARD_CLIENT = LogWardClient(
+LOGTIDE_CLIENT = LogTideClient(
     ClientOptions(
         api_url='http://localhost:8080',
         api_key='lp_your_api_key_here',
     )
 )
-LOGWARD_SERVICE_NAME = 'django-api'
+LOGTIDE_SERVICE_NAME = 'django-api'
 ```
 
 ### FastAPI Middleware
 
 ```python
 from fastapi import FastAPI
-from logward_sdk import LogWardClient, ClientOptions
-from logward_sdk.middleware import LogWardFastAPIMiddleware
+from logtide_sdk import LogTideClient, ClientOptions
+from logtide_sdk.middleware import LogTideFastAPIMiddleware
 
 app = FastAPI()
 
-client = LogWardClient(
+client = LogTideClient(
     ClientOptions(
         api_url='http://localhost:8080',
         api_key='lp_your_api_key_here',
@@ -392,7 +392,7 @@ client = LogWardClient(
 )
 
 app.add_middleware(
-    LogWardFastAPIMiddleware,
+    LogTideFastAPIMiddleware,
     client=client,
     service_name='fastapi-api',
 )
@@ -413,11 +413,11 @@ See the [examples/](./examples) directory for complete working examples:
 
 ## API Reference
 
-### LogWardClient
+### LogTideClient
 
 #### Constructor
 ```python
-client = LogWardClient(options: ClientOptions)
+client = LogTideClient(options: ClientOptions)
 ```
 
 #### Logging Methods
@@ -468,7 +468,7 @@ atexit.register(client.close)
 ### 2. Use Global Metadata
 
 ```python
-client = LogWardClient(
+client = LogTideClient(
     ClientOptions(
         api_url='http://localhost:8080',
         api_key='lp_your_api_key_here',
@@ -484,7 +484,7 @@ client = LogWardClient(
 ### 3. Enable Debug Mode in Development
 
 ```python
-client = LogWardClient(
+client = LogTideClient(
     ClientOptions(
         api_url='http://localhost:8080',
         api_key='lp_your_api_key_here',
@@ -524,8 +524,8 @@ monitor_thread.start()
 
 ```bash
 # Clone repository
-git clone https://github.com/logward-dev/logward-sdk-python.git
-cd logward-sdk-python
+git clone https://github.com/logtide/python-sdk.git
+cd logtide-sdk-python
 
 # Create virtual environment
 python -m venv venv
@@ -542,13 +542,13 @@ pip install -e ".[dev]"
 pytest tests/
 
 # Type checking
-mypy logward_sdk/
+mypy logtide_sdk/
 
 # Code formatting
-black logward_sdk/ tests/ examples/
+black logtide_sdk/ tests/ examples/
 
 # Linting
-ruff check logward_sdk/
+ruff check logtide_sdk/
 ```
 
 ---
@@ -561,11 +561,11 @@ MIT
 
 ## Contributing
 
-Contributions are welcome! Please open an issue or PR on [GitHub](https://github.com/logward-dev/logward-sdk-python).
+Contributions are welcome! Please open an issue or PR on [GitHub](https://github.com/logtide/python-sdk).
 
 ---
 
 ## Support
 
-- **Documentation**: [https://logward.dev/docs](https://logward.dev/docs)
-- **Issues**: [GitHub Issues](https://github.com/logward-dev/logward-sdk-python/issues)
+- **Documentation**: [https://logtide.dev/docs](https://logtide.dev/docs)
+- **Issues**: [GitHub Issues](https://github.com/logtide/python-sdk/issues)

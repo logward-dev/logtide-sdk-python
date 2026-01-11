@@ -1,4 +1,4 @@
-"""Flask middleware for LogWard SDK."""
+"""Flask middleware for LogTide SDK."""
 
 import time
 from typing import Optional
@@ -7,21 +7,21 @@ try:
     from flask import Flask, Request, Response, g, request
 except ImportError:
     raise ImportError(
-        "Flask is required for LogWardFlaskMiddleware. "
-        "Install it with: pip install logward-sdk[flask]"
+        "Flask is required for LogTideFlaskMiddleware. "
+        "Install it with: pip install logtide-sdk[flask]"
     )
 
-from ..client import LogWardClient
+from ..client import LogTideClient
 
 
-class LogWardFlaskMiddleware:
+class LogTideFlaskMiddleware:
     """
     Flask middleware for automatic request/response logging.
 
     Example:
         app = Flask(__name__)
-        client = LogWardClient(ClientOptions(...))
-        LogWardFlaskMiddleware(
+        client = LogTideClient(ClientOptions(...))
+        LogTideFlaskMiddleware(
             app,
             client=client,
             service_name='flask-api'
@@ -31,7 +31,7 @@ class LogWardFlaskMiddleware:
     def __init__(
         self,
         app: Flask,
-        client: LogWardClient,
+        client: LogTideClient,
         service_name: str,
         log_requests: bool = True,
         log_responses: bool = True,
@@ -46,7 +46,7 @@ class LogWardFlaskMiddleware:
 
         Args:
             app: Flask application instance
-            client: LogWard client
+            client: LogTide client
             service_name: Service name for logs
             log_requests: Log incoming requests
             log_responses: Log responses
@@ -81,7 +81,7 @@ class LogWardFlaskMiddleware:
         if self._should_skip(request.path):
             return
 
-        g.logward_start_time = time.time()
+        g.logtide_start_time = time.time()
 
         if not self.log_requests:
             return
@@ -118,8 +118,8 @@ class LogWardFlaskMiddleware:
             return response
 
         duration_ms = 0
-        if hasattr(g, "logward_start_time"):
-            duration_ms = (time.time() - g.logward_start_time) * 1000
+        if hasattr(g, "logtide_start_time"):
+            duration_ms = (time.time() - g.logtide_start_time) * 1000
 
         metadata = {
             "method": request.method,
@@ -162,8 +162,8 @@ class LogWardFlaskMiddleware:
             raise error
 
         duration_ms = 0
-        if hasattr(g, "logward_start_time"):
-            duration_ms = (time.time() - g.logward_start_time) * 1000
+        if hasattr(g, "logtide_start_time"):
+            duration_ms = (time.time() - g.logtide_start_time) * 1000
 
         self.client.error(
             self.service_name,

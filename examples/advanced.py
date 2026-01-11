@@ -1,17 +1,17 @@
-"""Advanced features example for LogWard Python SDK."""
+"""Advanced features example for LogTide Python SDK."""
 
 from datetime import datetime, timedelta
 
-from logward_sdk import (
+from logtide_sdk import (
     AggregatedStatsOptions,
     ClientOptions,
     LogLevel,
-    LogWardClient,
+    LogTideClient,
     QueryOptions,
 )
 
 # Full configuration
-client = LogWardClient(
+client = LogTideClient(
     ClientOptions(
         api_url="http://localhost:8080",
         api_key="lp_your_api_key_here",

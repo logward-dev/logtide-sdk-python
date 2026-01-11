@@ -1,4 +1,4 @@
-"""FastAPI middleware for LogWard SDK."""
+"""FastAPI middleware for LogTide SDK."""
 
 import time
 from typing import Callable, Optional
@@ -9,23 +9,23 @@ try:
     from starlette.types import ASGIApp
 except ImportError:
     raise ImportError(
-        "FastAPI and Starlette are required for LogWardFastAPIMiddleware. "
-        "Install them with: pip install logward-sdk[fastapi]"
+        "FastAPI and Starlette are required for LogTideFastAPIMiddleware. "
+        "Install them with: pip install logtide-sdk[fastapi]"
     )
 
-from ..client import LogWardClient
+from ..client import LogTideClient
 
 
-class LogWardFastAPIMiddleware(BaseHTTPMiddleware):
+class LogTideFastAPIMiddleware(BaseHTTPMiddleware):
     """
     FastAPI middleware for automatic request/response logging.
 
     Example:
         app = FastAPI()
-        client = LogWardClient(ClientOptions(...))
+        client = LogTideClient(ClientOptions(...))
 
         app.add_middleware(
-            LogWardFastAPIMiddleware,
+            LogTideFastAPIMiddleware,
             client=client,
             service_name='fastapi-api'
         )
@@ -34,7 +34,7 @@ class LogWardFastAPIMiddleware(BaseHTTPMiddleware):
     def __init__(
         self,
         app: ASGIApp,
-        client: LogWardClient,
+        client: LogTideClient,
         service_name: str,
         log_requests: bool = True,
         log_responses: bool = True,
@@ -48,7 +48,7 @@ class LogWardFastAPIMiddleware(BaseHTTPMiddleware):
 
         Args:
             app: ASGI application
-            client: LogWard client
+            client: LogTide client
             service_name: Service name for logs
             log_requests: Log incoming requests
             log_responses: Log responses

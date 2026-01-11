@@ -1,4 +1,4 @@
-"""Enums for LogWard SDK."""
+"""Enums for LogTide SDK."""
 
 from enum import Enum
 

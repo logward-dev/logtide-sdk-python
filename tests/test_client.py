@@ -1,21 +1,21 @@
-"""Basic tests for LogWard SDK."""
+"""Basic tests for LogTide SDK."""
 
 import time
 from datetime import datetime
 
-from logward_sdk import (
+from logtide_sdk import (
     CircuitState,
     ClientOptions,
     LogEntry,
     LogLevel,
-    LogWardClient,
+    LogTideClient,
     QueryOptions,
 )
 
 
 def test_client_initialization():
     """Test client initialization."""
-    client = LogWardClient(
+    client = LogTideClient(
         ClientOptions(
             api_url="http://localhost:8080",
             api_key="test_key",
@@ -29,7 +29,7 @@ def test_client_initialization():
 
 def test_logging_methods():
     """Test basic logging methods."""
-    client = LogWardClient(
+    client = LogTideClient(
         ClientOptions(
             api_url="http://localhost:8080",
             api_key="test_key",
@@ -51,7 +51,7 @@ def test_logging_methods():
 
 def test_trace_id_context():
     """Test trace ID context management."""
-    client = LogWardClient(
+    client = LogTideClient(
         ClientOptions(
             api_url="http://localhost:8080",
             api_key="test_key",
@@ -79,7 +79,7 @@ def test_trace_id_context():
 
 def test_auto_trace_id():
     """Test auto trace ID generation."""
-    client = LogWardClient(
+    client = LogTideClient(
         ClientOptions(
             api_url="http://localhost:8080",
             api_key="test_key",
@@ -95,7 +95,7 @@ def test_auto_trace_id():
 
 def test_error_serialization():
     """Test error serialization."""
-    client = LogWardClient(
+    client = LogTideClient(
         ClientOptions(
             api_url="http://localhost:8080",
             api_key="test_key",
@@ -116,7 +116,7 @@ def test_error_serialization():
 
 def test_buffer_management():
     """Test buffer size limits."""
-    client = LogWardClient(
+    client = LogTideClient(
         ClientOptions(
             api_url="http://localhost:8080",
             api_key="test_key",
@@ -140,7 +140,7 @@ def test_buffer_management():
 
 def test_metrics():
     """Test metrics tracking."""
-    client = LogWardClient(
+    client = LogTideClient(
         ClientOptions(
             api_url="http://localhost:8080",
             api_key="test_key",
@@ -161,7 +161,7 @@ def test_metrics():
 
 def test_circuit_breaker_state():
     """Test circuit breaker state."""
-    client = LogWardClient(
+    client = LogTideClient(
         ClientOptions(
             api_url="http://localhost:8080",
             api_key="test_key",
@@ -176,7 +176,7 @@ def test_circuit_breaker_state():
 
 def test_global_metadata():
     """Test global metadata."""
-    client = LogWardClient(
+    client = LogTideClient(
         ClientOptions(
             api_url="http://localhost:8080",
             api_key="test_key",

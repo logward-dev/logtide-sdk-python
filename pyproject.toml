@@ -3,15 +3,15 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "logward-sdk"
+name = "logtide-sdk"
 version = "0.1.0"
-description = "Official Python SDK for LogWard - Self-hosted log management with batching, retry logic, circuit breaker, query API, and middleware support"
+description = "Official Python SDK for LogTide - Self-hosted log management with batching, retry logic, circuit breaker, query API, and middleware support"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [{name = "Polliog", email = "giuseppe@solture.it"}]
 requires-python = ">=3.8"
 keywords = [
-    "logward",
+    "logtide",
     "logging",
     "logs",
     "log-management",
@@ -57,17 +57,17 @@ django = ["django>=3.2.0"]
 fastapi = ["fastapi>=0.100.0", "starlette>=0.27.0"]
 
 [project.urls]
-Homepage = "https://github.com/logward-dev/logward-sdk-python"
-Repository = "https://github.com/logward-dev/logward-sdk-python"
-Documentation = "https://logward.dev/docs"
-Issues = "https://github.com/logward-dev/logward-sdk-python/issues"
+Homepage = "https://github.com/logtide/python-sdk"
+Repository = "https://github.com/logtide/python-sdk"
+Documentation = "https://logtide.dev/docs"
+Issues = "https://github.com/logtide/python-sdk/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["logward_sdk*"]
+include = ["logtide_sdk*"]
 
 [tool.setuptools.package-data]
-logward_sdk = ["py.typed"]
+logtide_sdk = ["py.typed"]
 
 [tool.black]
 line-length = 100

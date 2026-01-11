@@ -1,14 +1,14 @@
-"""Flask middleware example for LogWard Python SDK."""
+"""Flask middleware example for LogTide Python SDK."""
 
 from flask import Flask
 
-from logward_sdk import ClientOptions, LogWardClient
-from logward_sdk.middleware import LogWardFlaskMiddleware
+from logtide_sdk import ClientOptions, LogTideClient
+from logtide_sdk.middleware import LogTideFlaskMiddleware
 
 app = Flask(__name__)
 
-# Initialize LogWard client
-client = LogWardClient(
+# Initialize LogTide client
+client = LogTideClient(
     ClientOptions(
         api_url="http://localhost:8080",
         api_key="lp_your_api_key_here",
@@ -16,7 +16,7 @@ client = LogWardClient(
 )
 
 # Add middleware
-LogWardFlaskMiddleware(
+LogTideFlaskMiddleware(
     app,
     client=client,
     service_name="flask-api",
