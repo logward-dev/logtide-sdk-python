@@ -1,21 +1,36 @@
-# LogTide Python SDK
+<p align="center">
+  <img src="https://raw.githubusercontent.com/logtide-dev/logtide/main/docs/images/logo.png" alt="LogTide Logo" width="400">
+</p>
 
-Official Python SDK for LogTide with advanced features: automatic batching, retry logic, circuit breaker, query API, live streaming, and middleware support.
+<h1 align="center">LogTide Python SDK</h1>
+
+<p align="center">
+  <a href="https://pypi.org/project/logtide-sdk/"><img src="https://img.shields.io/pypi/v/logtide-sdk?color=blue" alt="PyPI"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License"></a>
+  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.8+-blue.svg" alt="Python"></a>
+  <a href="https://github.com/logtide-dev/logtide-sdk-python/releases"><img src="https://img.shields.io/github/v/release/logtide-dev/logtide-sdk-python" alt="Release"></a>
+</p>
+
+<p align="center">
+  Official Python SDK for <a href="https://logtide.dev">LogTide</a> with automatic batching, retry logic, circuit breaker, query API, live streaming, and middleware support.
+</p>
+
+---
 
 ## Features
 
-- ✅ **Automatic batching** with configurable size and interval
-- ✅ **Retry logic** with exponential backoff
-- ✅ **Circuit breaker** pattern for fault tolerance
-- ✅ **Max buffer size** with drop policy to prevent memory leaks
-- ✅ **Query API** for searching and filtering logs
-- ✅ **Live tail** with Server-Sent Events (SSE)
-- ✅ **Trace ID context** for distributed tracing
-- ✅ **Global metadata** added to all logs
-- ✅ **Structured error serialization**
-- ✅ **Internal metrics** (logs sent, errors, latency, etc.)
-- ✅ **Flask, Django & FastAPI middleware** for auto-logging HTTP requests
-- ✅ **Full Python 3.8+ support** with type hints
+- **Automatic batching** with configurable size and interval
+- **Retry logic** with exponential backoff
+- **Circuit breaker** pattern for fault tolerance
+- **Max buffer size** with drop policy to prevent memory leaks
+- **Query API** for searching and filtering logs
+- **Live tail** with Server-Sent Events (SSE)
+- **Trace ID context** for distributed tracing
+- **Global metadata** added to all logs
+- **Structured error serialization**
+- **Internal metrics** (logs sent, errors, latency, etc.)
+- **Flask, Django & FastAPI middleware** for auto-logging HTTP requests
+- **Full Python 3.8+ support** with type hints
 
 ## Requirements
 
@@ -28,7 +43,7 @@ Official Python SDK for LogTide with advanced features: automatic batching, retr
 pip install logtide-sdk
 ```
 
-### Optional dependencies
+### Optional Dependencies
 
 ```bash
 # For async support
@@ -103,33 +118,33 @@ client = LogTideClient(
     ClientOptions(
         api_url='http://localhost:8080',
         api_key='lp_your_api_key_here',
-        
+
         # Batching
         batch_size=100,
         flush_interval=5000,
-        
+
         # Buffer management
         max_buffer_size=10000,
-        
-        # Retry with exponential backoff (1s → 2s → 4s)
+
+        # Retry with exponential backoff (1s -> 2s -> 4s)
         max_retries=3,
         retry_delay_ms=1000,
-        
+
         # Circuit breaker
         circuit_breaker_threshold=5,
         circuit_breaker_reset_ms=30000,
-        
+
         # Metrics & debugging
         enable_metrics=True,
         debug=True,
-        
+
         # Global context
         global_metadata={
             'env': os.getenv('APP_ENV'),
             'version': '1.0.0',
             'hostname': os.uname().nodename,
         },
-        
+
         # Auto trace IDs
         auto_trace_id=False,
     )
@@ -205,8 +220,6 @@ with client.with_trace_id('request-456'):
 ### Auto-Generated Trace ID
 
 ```python
-import uuid
-
 with client.with_new_trace_id():
     client.info('worker', 'Background job started')
     client.info('worker', 'Job completed')
@@ -321,7 +334,9 @@ client.reset_metrics()
 
 ---
 
-## Middleware
+## Middleware Integration
+
+LogTide provides ready-to-use middleware for popular frameworks.
 
 ### Flask Middleware
 
@@ -411,48 +426,6 @@ See the [examples/](./examples) directory for complete working examples:
 
 ---
 
-## API Reference
-
-### LogTideClient
-
-#### Constructor
-```python
-client = LogTideClient(options: ClientOptions)
-```
-
-#### Logging Methods
-- `log(entry: LogEntry) -> None`
-- `debug(service: str, message: str, metadata: dict = None) -> None`
-- `info(service: str, message: str, metadata: dict = None) -> None`
-- `warn(service: str, message: str, metadata: dict = None) -> None`
-- `error(service: str, message: str, metadata_or_error: dict | Exception = None) -> None`
-- `critical(service: str, message: str, metadata_or_error: dict | Exception = None) -> None`
-
-#### Context Methods
-- `set_trace_id(trace_id: str | None) -> None`
-- `get_trace_id() -> str | None`
-- `with_trace_id(trace_id: str)` → context manager
-- `with_new_trace_id()` → context manager
-
-#### Query Methods
-- `query(options: QueryOptions) -> LogsResponse`
-- `get_by_trace_id(trace_id: str) -> list[dict]`
-- `get_aggregated_stats(options: AggregatedStatsOptions) -> AggregatedStatsResponse`
-
-#### Streaming
-- `stream(on_log: callable, on_error: callable = None, filters: dict = None) -> None`
-
-#### Metrics
-- `get_metrics() -> ClientMetrics`
-- `reset_metrics() -> None`
-- `get_circuit_breaker_state() -> CircuitState`
-
-#### Lifecycle
-- `flush() -> None`
-- `close() -> None`
-
----
-
 ## Best Practices
 
 ### 1. Always Close on Shutdown
@@ -502,13 +475,13 @@ import threading
 def monitor_metrics():
     while True:
         metrics = client.get_metrics()
-        
+
         if metrics.logs_dropped > 0:
-            print(f"⚠️ Logs dropped: {metrics.logs_dropped}")
-        
+            print(f"Warning: Logs dropped: {metrics.logs_dropped}")
+
         if metrics.circuit_breaker_trips > 0:
-            print("🔴 Circuit breaker is OPEN!")
-        
+            print("Error: Circuit breaker is OPEN!")
+
         time.sleep(60)
 
 # Run in background thread
@@ -518,54 +491,16 @@ monitor_thread.start()
 
 ---
 
-## Development
+## Contributing
 
-### Setup
-
-```bash
-# Clone repository
-git clone https://github.com/logtide-dev/python-sdk.git
-cd logtide-sdk-python
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dev dependencies
-pip install -e ".[dev]"
-```
-
-### Testing
-
-```bash
-# Run tests
-pytest tests/
-
-# Type checking
-mypy logtide_sdk/
-
-# Code formatting
-black logtide_sdk/ tests/ examples/
-
-# Linting
-ruff check logtide_sdk/
-```
-
----
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## License
 
-MIT
+MIT License - see [LICENSE](LICENSE) for details.
 
----
+## Links
 
-## Contributing
-
-Contributions are welcome! Please open an issue or PR on [GitHub](https://github.com/logtide-dev/python-sdk).
-
----
-
-## Support
-
-- **Documentation**: [https://logtide.dev/docs](https://logtide.dev/docs)
-- **Issues**: [GitHub Issues](https://github.com/logtide-dev/python-sdk/issues)
+- [LogTide Website](https://logtide.dev)
+- [Documentation](https://logtide.dev/docs/sdks/python/)
+- [GitHub Issues](https://github.com/logtide-dev/logtide-sdk-python/issues)
